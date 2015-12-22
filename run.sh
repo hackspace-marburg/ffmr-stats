@@ -1,3 +1,3 @@
 #!/usr/bin/env sh
 . venv/bin/activate
-python3 export.py
+python3 export.py insert_data
