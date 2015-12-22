@@ -30,7 +30,6 @@ def flatten_statistics(stats: dict) -> dict:
 def generate_query(stats: dict, timestamp: str, tags: dict) -> dict:
     measurements = []
     for k, v in flatten_statistics(stats).items():
-        print(k, type(v))
         if k in ['gateway']:
           value = str(v)
         elif k in ['uptime', 'loadavg', 'memory_usage', 'rootfs_usage']:
