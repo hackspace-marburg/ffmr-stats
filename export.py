@@ -127,8 +127,8 @@ def insert_data(db_host: str, db_port: int,
                 nodes_url: str):
     '''Fetch data from nodes.json and export it to InfluxDB'''
     db = InfluxDBClient(db_host, db_port, db_user, db_password, db_name)
-    data = get_nodes(nodes_url)
-    for k, v in data.items():
+    nodes = get_nodes(nodes_url)
+    for k, v in nodes.items():
         if 'role' in v['nodeinfo']['system']:
             if v['nodeinfo']['system']['role'] == 'gateway':
                 continue
