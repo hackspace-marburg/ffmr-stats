@@ -136,28 +136,31 @@ def insert_data(db_host: str, db_port: int,
     db = InfluxDBClient(db_host, db_port, db_user, db_password, db_name)
     nodes = get_nodes(nodes_url)
     for k, v in nodes.items():
-        if 'role' in v['nodeinfo']['system']:
-            if v['nodeinfo']['system']['role'] == 'gateway':
-                continue
-        tags = {
-            'node_id': v['nodeinfo']['node_id'],
-            'hostname': v['nodeinfo']['hostname'],
-            'firmware_base': v['nodeinfo']['software']['firmware']['base'],
-            'firmware_release': v['nodeinfo']['software']['firmware']['release'],
-            'autoupdater_enabled': v['nodeinfo']['software']['autoupdater']['enabled'],
-            'autoupdater_branch': v['nodeinfo']['software']['autoupdater']['branch'],
-            'hardware_model': v['nodeinfo']['hardware']['model'],
-            'hardware_nproc': v['nodeinfo']['hardware']['nproc']
-        }
-        # location is optional
         try:
-            tags['location'] = geohash.encode(
-                v['nodeinfo']['location']['latitude'],
-                v['nodeinfo']['location']['longitude']
-            )
+          if 'role' in v['nodeinfo']['system']:
+              if v['nodeinfo']['system']['role'] == 'gateway':
+                  continue
+          tags = {
+              'node_id': v['nodeinfo']['node_id'],
+              'hostname': v['nodeinfo']['hostname'],
+              'firmware_base': v['nodeinfo']['software']['firmware']['base'],
+              'firmware_release': v['nodeinfo']['software']['firmware']['release'],
+              'autoupdater_enabled': v['nodeinfo']['software']['autoupdater']['enabled'],
+              'autoupdater_branch': v['nodeinfo']['software']['autoupdater']['branch'],
+              'hardware_model': v['nodeinfo']['hardware']['model'],
+              'hardware_nproc': v['nodeinfo']['hardware']['nproc']
+          }
+          # location is optional
+          try:
+              tags['location'] = geohash.encode(
+                  v['nodeinfo']['location']['latitude'],
+                  v['nodeinfo']['location']['longitude']
+              )
+          except:
+              pass
+          db.write_points(generate_query(v['statistics'], v['lastseen'], tags))
         except:
-            pass
-        db.write_points(generate_query(v['statistics'], v['lastseen'], tags))
+          continue  # ignore failing nodes
 
 if __name__ == '__main__':
     cli()
