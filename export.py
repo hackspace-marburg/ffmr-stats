@@ -68,7 +68,7 @@ def get_nodes_for_link(graph_nodes: dict, real_nodes: dict, source: int, target:
         t_nodeid,
         real_nodes[s_nodeid]['nodeinfo']['hostname'],
         real_nodes[t_nodeid]['nodeinfo']['hostname']
-    }
+    )
 
 @click.group()
 def cli():
