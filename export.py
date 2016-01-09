@@ -25,7 +25,7 @@ def get_nodes(url: str) -> dict:
 def get_graph(url: str) -> dict:
     api = get_api_resource(url)
 
-    return api['graph']
+    return api['batadv']
 
 def flatten_statistics(stats: dict) -> dict:
     def items():
