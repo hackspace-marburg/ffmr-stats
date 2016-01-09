@@ -200,8 +200,8 @@ def insert_data(db_host: str, db_port: int,
                     'tags': {
                         's_nodeid': s_nodeid,
                         't_nodeid': t_nodeid,
-                        's_hostname': s_nodeid,
-                        't_hostname': t_nodeid,
+                        's_hostname': s_hostname,
+                        't_hostname': t_hostname,
                         'bidirect': link['bidirect'],
                         'vpn': link['vpn']
                     },
