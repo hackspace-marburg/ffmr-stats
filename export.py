@@ -206,7 +206,7 @@ def insert_data(db_host: str, db_port: int,
                         'vpn': link['vpn']
                     },
                     'fields': {
-                        'tq': 1 / link['tq']  # TQ 0 - 255 becomes 0.0 ... 1.0
+                        'tq': float(1 / link['tq'])  # TQ 0 - 255 becomes 0.0 ... 1.0
                     }
                 }
             ]
